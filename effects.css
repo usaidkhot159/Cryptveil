@@ -1,0 +1,51 @@
+/* ═══════════════════════════════════════════
+   EFFECTS — Damage numbers, screen flash
+═══════════════════════════════════════════ */
+
+.damage-number {
+  position: fixed;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 900;
+  pointer-events: none;
+  z-index: 70;
+  animation: dmg-float 1s ease forwards;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  letter-spacing: 0.04em;
+}
+.damage-number.player { color: var(--crimson-bright); }
+.damage-number.enemy  { color: var(--gold-bright); }
+.damage-number.heal   { color: var(--teal-bright); font-size: 0.95rem; }
+.damage-number.crit   { color: var(--rarity-legendary); font-size: 1.4rem; }
+
+@keyframes dmg-float {
+  0%   { opacity: 1; transform: translateY(0); }
+  20%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-60px); }
+}
+
+/* Screen flash on hit */
+.screen-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 45;
+  animation: flash-out 0.3s ease forwards;
+}
+.screen-flash.damage { background: rgba(217, 64, 64, 0.25); }
+.screen-flash.gold   { background: rgba(232, 197, 106, 0.15); }
+
+@keyframes flash-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Vignette on game canvas */
+#screen-game::after {
+  content: '';
+  position: fixed;
+  inset: 52px 0 0 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 50%, rgba(8,8,15,0.6) 100%);
+  z-index: 15;
+}
