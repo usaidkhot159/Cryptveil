@@ -1,0 +1,141 @@
+/* ═══════════════════════════════════════════
+   HUD — In-game heads-up display
+═══════════════════════════════════════════ */
+
+#hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: linear-gradient(to bottom, rgba(8,8,15,0.98) 0%, rgba(8,8,15,0.7) 100%);
+  border-bottom: 1px solid var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-5);
+  z-index: 20;
+  gap: var(--sp-4);
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+.hud-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.hud-icon {
+  font-size: 0.9rem;
+  color: var(--crimson-bright);
+  line-height: 1;
+}
+.hud-icon.atk  { color: var(--text-body); }
+.hud-icon.gold { color: var(--gold-bright); }
+
+.hud-bar-wrap {
+  width: 80px;
+  height: 6px;
+  background: var(--surface-raised);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--crimson-dark);
+}
+
+.hud-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--crimson-dark), var(--crimson-bright));
+  border-radius: 3px;
+  transition: width 0.25s ease;
+}
+
+.hud-val {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: 0.04em;
+  min-width: 28px;
+}
+
+.hud-center .hud-level {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-mid);
+}
+.hud-level #floor-val {
+  color: var(--gold-bright);
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.hud-btn {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: var(--sp-1) var(--sp-3);
+  border: var(--border-stone);
+  border-radius: var(--r-sm);
+  background: var(--surface-stone);
+  transition: all 0.2s;
+}
+.hud-btn:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold-dim);
+  background: var(--surface-raised);
+}
+
+/* ── Combat Log ───────────────────────────── */
+#combat-log {
+  position: fixed;
+  bottom: var(--sp-5);
+  left: var(--sp-5);
+  width: 260px;
+  max-height: 120px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#log-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.log-entry {
+  font-size: 0.82rem;
+  color: var(--text-body);
+  padding: 2px var(--sp-2);
+  background: rgba(8,8,15,0.7);
+  border-left: 2px solid var(--surface-raised);
+  border-radius: 0 2px 2px 0;
+  animation: log-in 0.2s ease;
+  line-height: 1.3;
+}
+.log-entry.damage { border-left-color: var(--crimson-bright); color: var(--crimson-bright); }
+.log-entry.heal   { border-left-color: var(--teal-bright); color: var(--teal-bright); }
+.log-entry.loot   { border-left-color: var(--gold-mid); color: var(--gold-bright); }
+.log-entry.info   { border-left-color: var(--text-ghost); color: var(--text-muted); }
+
+@keyframes log-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
