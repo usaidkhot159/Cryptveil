@@ -1,0 +1,18 @@
+/* ═══════════════════════════════════════════
+   MINIMAP
+═══════════════════════════════════════════ */
+
+#minimap-canvas {
+  position: fixed;
+  top: 62px;
+  right: var(--sp-4);
+  width: 140px;
+  height: 140px;
+  border: var(--border-gold);
+  border-radius: var(--r-sm);
+  background: rgba(8,8,15,0.85);
+  z-index: 25;
+  image-rendering: pixelated;
+  opacity: 0.9;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 0 8px var(--gold-glow);
+}
