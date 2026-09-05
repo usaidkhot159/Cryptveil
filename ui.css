@@ -1,0 +1,94 @@
+/* ═══════════════════════════════════════════
+   UI — Game canvas container and layout
+═══════════════════════════════════════════ */
+
+#screen-game {
+  flex-direction: column;
+  background: var(--surface-void);
+}
+
+#game-canvas {
+  position: fixed;
+  inset: 0;
+  top: 52px; /* below HUD */
+  width: 100%;
+  height: calc(100% - 52px);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ── Loot Popup ───────────────────────────── */
+.loot-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface-stone);
+  border: var(--border-gold);
+  border-radius: var(--r-md);
+  box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 20px var(--gold-glow);
+  padding: var(--sp-5);
+  z-index: 60;
+  min-width: 220px;
+  text-align: center;
+  animation: loot-appear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes loot-appear {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.75); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.loot-popup .loot-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-4);
+}
+
+.loot-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  background: var(--surface-raised);
+  border-radius: var(--r-sm);
+  margin-bottom: var(--sp-3);
+}
+
+.loot-icon { font-size: 2rem; line-height: 1; }
+
+.loot-name {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.loot-name.common    { color: var(--rarity-common); }
+.loot-name.uncommon  { color: var(--rarity-uncommon); }
+.loot-name.rare      { color: var(--rarity-rare); }
+.loot-name.epic      { color: var(--rarity-epic); }
+.loot-name.legendary { color: var(--rarity-legendary); }
+
+.loot-stat {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  font-style: italic;
+}
+
+.loot-close {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: var(--sp-2) var(--sp-4);
+  border: var(--border-stone);
+  border-radius: var(--r-sm);
+  width: 100%;
+  transition: all 0.2s;
+}
+.loot-close:hover { color: var(--gold-bright); border-color: var(--gold-dim); }
