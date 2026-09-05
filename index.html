@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryptveil — Procedural Dungeon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+  <link rel="stylesheet" href="css/hud.css" />
+  <link rel="stylesheet" href="css/screens.css" />
+  <link rel="stylesheet" href="css/minimap.css" />
+  <link rel="stylesheet" href="css/inventory.css" />
+  <link rel="stylesheet" href="css/achievements.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+</head>
+<body>
+
+  <!-- TITLE SCREEN -->
+  <div id="screen-title" class="screen active">
+    <div class="title-bg"></div>
+    <div class="title-content">
+      <div class="title-rune">⬡</div>
+      <h1 class="game-title">Cryptveil</h1>
+      <p class="game-subtitle">A procedural dungeon awaits. Every descent is different.</p>
+      <div class="title-actions">
+        <button class="btn-primary" id="btn-new-game">Begin Descent</button>
+        <button class="btn-secondary" id="btn-continue" disabled>Continue Run</button>
+        <button class="btn-ghost" id="btn-records">Best Runs</button>
+        <button class="btn-ghost" id="btn-achievements-title">Achievements</button>
+      </div>
+      <div class="title-legend">
+        <span>W A S D or ↑ ↓ ← → to move</span>
+        <span>SPACE to attack</span>
+        <span>I for inventory</span>
+        <span>M for map</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="screen-game" class="screen">
+    <!-- HUD -->
+    <div id="hud">
+      <div class="hud-left">
+        <div class="hud-stat" id="hud-hp">
+          <span class="hud-icon">♥</span>
+          <div class="hud-bar-wrap">
+            <div class="hud-bar" id="hp-bar"></div>
+          </div>
+          <span class="hud-val" id="hp-val">100</span>
+        </div>
+        <div class="hud-stat">
+          <span class="hud-icon atk">⚔</span>
+          <span class="hud-val" id="atk-val">10</span>
+        </div>
+        <div class="hud-stat">
+          <span class="hud-icon gold">◈</span>
+          <span class="hud-val" id="gold-val">0</span>
+        </div>
+      </div>
+      <div class="hud-center">
+        <span class="hud-level">FLOOR <span id="floor-val">1</span></span>
+      </div>
+      <div class="hud-right">
+        <button class="hud-btn" id="btn-inventory">⚙ Inv</button>
+        <button class="hud-btn" id="btn-map-toggle">⊞ Map</button>
+        <button class="hud-btn" id="btn-pause">⏸</button>
+      </div>
+    </div>
+
+    <!-- CANVAS -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- MINIMAP -->
+    <canvas id="minimap-canvas"></canvas>
+
+    <!-- LOG -->
+    <div id="combat-log">
+      <div id="log-entries"></div>
+    </div>
+  </div>
+
+  <!-- INVENTORY SCREEN (overlay) -->
+  <div id="screen-inventory" class="screen overlay hidden">
+    <div class="overlay-panel" id="inventory-panel">
+      <div class="panel-header">
+        <h2>Inventory</h2>
+        <button class="btn-close" id="btn-close-inventory">✕</button>
+      </div>
+      <div class="inventory-body">
+        <div class="inv-stats" id="inv-stats"></div>
+        <div class="inv-grid" id="inv-grid"></div>
+        <div class="inv-detail" id="inv-detail">
+          <p class="inv-hint">Select an item to inspect</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME OVER SCREEN -->
+  <div id="screen-gameover" class="screen overlay hidden">
+    <div class="overlay-panel gameover-panel">
+      <div class="go-rune">☠</div>
+      <h2 class="go-title">You have fallen.</h2>
+      <p class="go-sub" id="go-sub-text"></p>
+      <div class="go-stats" id="go-stats"></div>
+      <div class="go-actions">
+        <button class="btn-primary" id="btn-retry">Descend Again</button>
+        <button class="btn-ghost" id="btn-go-title">Return to Title</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIN SCREEN -->
+  <div id="screen-win" class="screen overlay hidden">
+    <div class="overlay-panel win-panel">
+      <div class="win-rune">♛</div>
+      <h2 class="win-title">The Dungeon Falls.</h2>
+      <p class="win-sub">You have slain the Dungeon Boss and escaped the Cryptveil.</p>
+      <div class="win-stats" id="win-stats"></div>
+      <div class="win-actions">
+        <button class="btn-primary" id="btn-win-retry">Descend Again</button>
+        <button class="btn-ghost" id="btn-win-title">Return to Title</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECORDS SCREEN -->
+  <div id="screen-records" class="screen overlay hidden">
+    <div class="overlay-panel records-panel">
+      <div class="panel-header">
+        <h2>Best Runs</h2>
+        <button class="btn-close" id="btn-close-records">✕</button>
+      </div>
+      <div id="records-list"></div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS SCREEN -->
+  <div id="screen-achievements" class="screen overlay hidden">
+    <div class="overlay-panel achievements-panel">
+      <div class="panel-header">
+        <h2>Achievements</h2>
+        <button class="btn-close" id="btn-close-achievements">✕</button>
+      </div>
+      <div id="achievements-list"></div>
+    </div>
+  </div>
+
+  <!-- PAUSE SCREEN -->
+  <div id="screen-pause" class="screen overlay hidden">
+    <div class="overlay-panel pause-panel">
+      <h2>Paused</h2>
+      <div class="pause-actions">
+        <button class="btn-primary" id="btn-resume">Resume</button>
+        <button class="btn-ghost" id="btn-pause-title">Abandon Run</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOOT POPUP -->
+  <div id="loot-popup" class="loot-popup hidden"></div>
+
+  <!-- ACHIEVEMENT TOAST -->
+  <div id="achievement-toast" class="achievement-toast hidden"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
