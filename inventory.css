@@ -1,0 +1,161 @@
+/* ═══════════════════════════════════════════
+   INVENTORY
+═══════════════════════════════════════════ */
+
+#inventory-panel { max-width: 640px; }
+
+.inventory-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: var(--sp-4);
+}
+
+.inv-stats {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface-stone);
+  border-radius: var(--r-sm);
+  border: var(--border-stone);
+  flex-wrap: wrap;
+}
+
+.inv-stat-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.inv-stat-chip .label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.inv-stat-chip .value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.inv-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+  align-content: start;
+}
+
+.inv-slot {
+  aspect-ratio: 1;
+  background: var(--surface-stone);
+  border: 1px solid var(--surface-lit);
+  border-radius: var(--r-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.inv-slot:hover { border-color: var(--gold-dim); background: var(--surface-raised); }
+.inv-slot.selected { border-color: var(--gold-bright); background: var(--gold-glow); }
+.inv-slot.empty { cursor: default; }
+
+.inv-slot-icon { font-size: 1.4rem; line-height: 1; }
+.inv-slot-name {
+  font-size: 0.52rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+}
+
+/* Rarity dot */
+.inv-slot::after {
+  content: '';
+  position: absolute;
+  bottom: 3px; right: 3px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+}
+.inv-slot[data-rarity="common"]    ::after,
+.inv-slot[data-rarity="common"]::after    { background: var(--rarity-common); }
+.inv-slot[data-rarity="uncommon"]::after  { background: var(--rarity-uncommon); }
+.inv-slot[data-rarity="rare"]::after      { background: var(--rarity-rare); }
+.inv-slot[data-rarity="epic"]::after      { background: var(--rarity-epic); }
+.inv-slot[data-rarity="legendary"]::after { background: var(--rarity-legendary); }
+
+.inv-detail {
+  background: var(--surface-stone);
+  border: var(--border-stone);
+  border-radius: var(--r-sm);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  align-content: start;
+}
+
+.inv-hint {
+  font-style: italic;
+  color: var(--text-ghost);
+  font-size: 0.9rem;
+}
+
+.detail-icon  { font-size: 2.2rem; line-height: 1; }
+.detail-name  {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.detail-rarity {
+  font-size: 0.72rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.detail-rarity.common    { color: var(--rarity-common); }
+.detail-rarity.uncommon  { color: var(--rarity-uncommon); }
+.detail-rarity.rare      { color: var(--rarity-rare); }
+.detail-rarity.epic      { color: var(--rarity-epic); }
+.detail-rarity.legendary { color: var(--rarity-legendary); }
+
+.detail-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.detail-stat {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  display: flex;
+  justify-content: space-between;
+}
+.detail-stat .ds-val { color: var(--gold-bright); font-weight: 600; }
+
+.btn-use-item {
+  margin-top: auto;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--surface-raised);
+  border: var(--border-stone);
+  border-radius: var(--r-sm);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  transition: all 0.2s;
+}
+.btn-use-item:hover { background: var(--gold-glow); border-color: var(--gold-dim); }
